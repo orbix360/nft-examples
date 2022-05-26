@@ -1,37 +1,26 @@
-# Interactive NFT Examples
+# Basic Ownership Verification
 
-This repository contains examples that you can use to create Zip Archive for NFTs without that you can then upload on  [Minterverse.io](https://minterverse.io)
+This example shows a very basic example of an NFT that shows or hides content 
+based on verifying the ownership of the NFT.
 
+## Contents
 
-## Installation
+This project contains the following files:
 
-Clone this git repository
-
-`git clone git@github.com:orbix360/nft-examples.git`
-
-Or download it directly from github's interface
-
-## Examples
-
-[Basic HTML with ownership validation](ownership-validation/html-template/README.md)
+- `index.html` - Simple HTML that defines 2 divs that are hidden or shown based on ownership of NFT.
+- `app.js` - contains simple javascript to read the URL parameters and use those to query the Tzkt API
+to determine if the NFT is owned by the current user.
 
 ## Reading the URL Parameters
 
-Some of the NFT examples demonstrate to add code to an NFT 
-to enable verification of the ownership of the NFT. 
-
-Adding ownership verification to your Interactive NFT enables such use cases as:
-* Show/hide content within the NFT
-* Unlock additional functionality within the interactive NFT
-
-In order to enable NFT ownership verification, the Minterverse.io NFT viewer 
+In order to enable NFT ownership verification, the Minterverse.io NFT viewer
 passes the following URL parameters to the NFT:
 
 * `viewer` - the wallet address of who is viewing the NFT
 * `contract` - the address of the NFT contract that was used to mint the NFT
 * `objkt` - the NFT token id
 
-As shown in the examples, these parameters can then be read by adding simple
+These parameters can then be read by adding simple
 Javascript code to your NFT:
 
 ```javascript
@@ -42,9 +31,7 @@ if (urlParams) {
     const objkt = urlParams.get('objkt');
     const owner = await getTokenOwner(viewer, contract, objkt);
     const isOwner = viewer && owner && viewer === owner;
-    if (isOwner) {
-        // show content
-    }
+    handleTokenOwnershipValidated(isOwner);
 }
 ```
 
@@ -74,4 +61,3 @@ async function getTokenOwner(viewer, contract, objkt){
   });
 }
 ```
-
